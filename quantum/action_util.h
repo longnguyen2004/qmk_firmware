@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <stdint.h>
+#include <stddef.h>
 #include "report.h"
 #include "modifiers.h"
 
@@ -30,7 +31,21 @@ extern report_keyboard_t *keyboard_report;
 extern report_nkro_t *nkro_report;
 #endif
 
+#define UNREGISTER_KEYCODES_BUFFER_SIZE 50 // Should be plenty of space for any occasion
+
+typedef struct {
+    uint8_t  buffer[UNREGISTER_KEYCODES_BUFFER_SIZE];
+    size_t   len;
+    uint16_t tap_delay;
+} unregister_keycodes_t;
+
+extern bool                           keyboard_report_has_deferred_keycodes;
+extern volatile unregister_keycodes_t unregister_keycodes;
+
+void send_keyboard_report_deferred(void);
 void send_keyboard_report(void);
+void send_keyboard_report_immediate(void);
+void send_keyboard_report_buffered_unregister_keys(void);
 
 /* key */
 inline void add_key(uint8_t key) {

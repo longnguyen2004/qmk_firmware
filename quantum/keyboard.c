@@ -41,6 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #if defined(AUDIO_ENABLE) || (defined(MIDI_ENABLE) && defined(MIDI_BASIC))
 #    include "process_music.h"
 #endif
+#include "action_util.h"
 #ifdef BACKLIGHT_ENABLE
 #    include "backlight.h"
 #endif
@@ -669,6 +670,13 @@ void keyboard_task(void) {
 
 #if defined(SPLIT_WATCHDOG_ENABLE)
     split_watchdog_task();
+#if defined(REGISTER_MULTIPLE_KEYEVENTS_ENABLE)
+    send_keyboard_report_immediate();
+    send_keyboard_report_buffered_unregister_keys();
+#endif
+
+#ifdef DEBUG_MATRIX_SCAN_RATE
+    matrix_scan_perf_task();
 #endif
 
 #if defined(RGBLIGHT_ENABLE)
