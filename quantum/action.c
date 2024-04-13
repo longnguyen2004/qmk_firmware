@@ -888,13 +888,13 @@ void register_code_deferred(uint8_t code) {
 #endif
 }
 
-void register_code(uint8_t code) { register_code_P(code, &send_keyboard_report); }
+__attribute__((weak)) void register_code(uint8_t code) { register_code_P(code, &send_keyboard_report); }
 
 /** \brief Utilities for actions. (FIXME: Needs better description)
  *
  * FIXME: Needs documentation.
  */
-__attribute__((weak)) void register_code_P(uint8_t code, void send_report_f(void)) {
+void register_code_P(uint8_t code, void send_report_f(void)) {
     if (code == KC_NO) {
         return;
 
@@ -966,7 +966,7 @@ void unregister_code_deferred(uint8_t code) {
 #endif
 }
 
-void unregister_code(uint8_t code) { unregister_code_P(code, &send_keyboard_report); }
+__attribute__((weak)) void unregister_code(uint8_t code) { unregister_code_P(code, &send_keyboard_report); }
 
 void unregister_code_buffered(uint8_t code, uint16_t delay) {
 #if defined(REGISTER_MULTIPLE_KEYEVENTS_ENABLE)
@@ -993,7 +993,7 @@ void unregister_code_buffered(uint8_t code, uint16_t delay) {
  *
  * FIXME: Needs documentation.
  */
-__attribute__((weak)) void unregister_code_P(uint8_t code, void send_report_f(void)) {
+void unregister_code_P(uint8_t code, void send_report_f(void)) {
     if (code == KC_NO) {
         return;
 
