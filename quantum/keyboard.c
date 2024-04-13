@@ -670,6 +670,8 @@ void keyboard_task(void) {
 
 #if defined(SPLIT_WATCHDOG_ENABLE)
     split_watchdog_task();
+#endif
+
 #if defined(REGISTER_MULTIPLE_KEYEVENTS_ENABLE)
     send_keyboard_report_immediate();
     send_keyboard_report_buffered_unregister_keys();
